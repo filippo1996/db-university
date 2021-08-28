@@ -1,5 +1,4 @@
 import response from '../api/response.js';
-console.log(response);
 
 //Function wrapper
 (function showList(f){

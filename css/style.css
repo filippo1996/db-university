@@ -1,0 +1,55 @@
+body{
+    font-family: 'Roboto', sans-serif;
+    background: #d8ebff;
+}
+
+.keyword-db{
+    color: rgb(62,146,199);
+}
+
+.column-db{
+    color: rgb(176,112,111);
+}
+
+.int-db{
+    color: rgb(204, 131, 45);
+}
+
+.func-db{
+    color: rgb(128, 128, 128)
+}
+
+.str-db{
+    color: rgb(204, 162, 114);
+}
+
+.title{
+    font-size: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.response{
+    background: rgb(241, 239, 239);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    width: max-content;
+}
+
+li{
+    line-height: 2.4;
+}
+
+button{
+    margin-left: 15px;
+    padding: 5px 8px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+button:hover{
+    background: grey;
+}
