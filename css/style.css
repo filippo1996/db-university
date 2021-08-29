@@ -41,6 +41,10 @@ li{
     line-height: 2.4;
 }
 
+li p:first-child {
+    display: inline-block;
+}
+
 button{
     margin-left: 15px;
     padding: 5px 8px;
@@ -53,3 +57,4 @@ button{
 button:hover{
     background: grey;
 }
+

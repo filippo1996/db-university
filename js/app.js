@@ -1,21 +1,23 @@
-import response from '../api/response.js';
+import response from '../api/response-it.js';
 
 //Function wrapper
 (function showList(f){
-    let ol, li, button;
+    let ol, li, button, p;
     // element list document
     ol = document.getElementById('list');
     for(let i = 0; i < response.length; i++){
         //Create element for DOM
         li = document.createElement('li');
+        p = document.createElement('p');
         button = document.createElement('button');
         //Create attribute in the button
         button.setAttribute('data-show', 'reply');
         //Insert name in the tag button
         buttonName(button);
         //Insert value in the tag html
-        li.innerHTML = response[i].request;
+        p.innerHTML = response[i].request;
         //Insert element in the DOM
+        li.append(p);
         li.append(button);
         ol.append(li);
     }
