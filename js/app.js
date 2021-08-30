@@ -11,9 +11,7 @@ import response from '../api/response-it.js';
         p = document.createElement('p');
         button = document.createElement('button');
         //Create attribute in the button
-        button.setAttribute('data-show', 'reply');
-        //Insert name in the tag button
-        buttonName(button);
+        button.setAttribute('data-show', false);
         //Insert value in the tag html
         p.innerHTML = response[i].request;
         //Insert element in the DOM
@@ -28,32 +26,23 @@ import response from '../api/response-it.js';
 }(eventButton));
 
 /**
- * Funzione che cambia in base al valore booleano il nome del pulsante
- */
-function buttonName(btn, bool = false){
-    if( bool ) btn.innerHTML = 'Nascondi Soluzione';
-    else btn.innerHTML = 'Mostra Soluzione';
-}
-
-
-/**
  * Funzione che mostra la risposta facendo click sul pulsante
  * @param {Object} ele 
  */
 function eventButton(){
-    let attribute = document.querySelectorAll('button[data-show="reply"]');
+    let attribute = document.querySelectorAll('button[data-show]');
     attribute.forEach((ele, key) => {
-        let read = false;
         ele.addEventListener('click', function(event){
+            let read = event.target.dataset.show;
             //verifichiamo se la risposta è stata aperta oppure no
-            if(read !== true){
-                read = true;
+            if(read !== 'true'){
+                read = 'true';
+                event.target.setAttribute('data-show', read);
                 showReply(event.target, key);
-                buttonName(event.target, read);
             } else {
-                read = false;
+                read = 'false';
+                event.target.setAttribute('data-show', read);
                 deleteReply(event.target);
-                buttonName(event.target, read);
             }
         });
     });
