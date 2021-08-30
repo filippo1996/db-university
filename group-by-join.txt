@@ -78,11 +78,10 @@ AND `teachers`.`surname` = 'Amato'
 4) BONUS
 /* Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per superare ciascuno dei suoi esami */
 SELECT `students`.`id`, `students`.`name`, `students`.`surname`, `exams`.`course_id`, COUNT(`exams`.`course_id`) AS `tentativi_esami`
-/* SELECT `students`.`id`,`students`.`name`, `students`.`surname`, `exams`.`course_id`, `exam_student`.`vote` */
 FROM db_university.students
 JOIN `db_university`.`exam_student`
 ON `students`.`id` = `exam_student`.`student_id`
 JOIN `db_university`.`exams`
 ON `exam_student`.`exam_id` = `exams`.`id`
-WHERE `exam_student`.`vote` BETWEEN 1 AND 30
-GROUP BY `students`.`id`, `exams`.`course_id`;
+GROUP BY `students`.`id`, `exams`.`course_id`
+HAVING MAX(`exam_student`.`vote`) >= 18;
