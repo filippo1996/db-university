@@ -1,0 +1,88 @@
+** Query con GROUP BY
+
+1)
+/* Contare quanti iscritti ci sono stati ogni anno */
+SELECT COUNT(`id`), YEAR(`enrolment_date`) AS `anno_iscrizione`
+FROM db_university.students
+GROUP BY(`anno_iscrizione`);
+
+
+2)
+/* Contare gli insegnanti che hanno l'ufficio nello stesso edificio */
+SELECT COUNT(`id`), `office_address`
+FROM db_university.teachers
+GROUP BY(`office_address`);
+
+OPPURE
+SELECT COUNT(`id`), `office_number`
+FROM db_university.teachers
+GROUP BY(`office_number`);
+
+
+3)
+/* Calcolare la media dei voti di ogni appello d'esame */
+SELECT AVG(`vote`), `exam_id` 
+FROM db_university.exam_student
+GROUP BY(`exam_id`);
+
+4)
+/* Contare quanti corsi di laurea ci sono per ogni dipartimento */
+SELECT COUNT(`id`), `department_id` 
+FROM db_university.degrees
+GROUP BY(`department_id`);
+
+
+
+
+** Query con JOIN
+
+1)
+/* Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia */
+SELECT `students`.* 
+FROM db_university.degrees
+JOIN `db_university`.`students`
+ON `degrees`.`id` = `students`.`degree_id`
+WHERE `degrees`.`name` = 'Corso di Laurea in Economia';
+
+(Metodo Inverso)
+
+/* Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia */
+SELECT `students`.* 
+FROM db_university.students
+JOIN `db_university`.`degrees`
+ON `students`.`degree_id` = `degrees`.`id`
+WHERE `degrees`.`name` = 'Corso di Laurea in Economia';
+
+
+2)
+/* Selezionare tutti i Corsi di Laurea del Dipartimento di Neuroscienze */
+SELECT `degrees`.`name` 
+FROM db_university.departments
+JOIN `db_university`.`degrees`
+ON `departments`.`id` = `degrees`.`department_id`
+WHERE `departments`.`name` = 'Dipartimento di Neuroscienze';
+
+
+3)
+/* Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44) */
+SELECT `courses`.`name` 
+FROM db_university.teachers
+JOIN `db_university`.`course_teacher`
+ON `teachers`.`id` = `course_teacher`.`teacher_id`
+JOIN `db_university`.`courses`
+ON `course_teacher`.`course_id` = `courses`.`id`
+WHERE `teachers`.`name` = 'Fulvio'
+AND `teachers`.`surname` = 'Amato'
+
+
+4) BONUS
+/* Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per superare ciascuno dei suoi esami */
+SELECT `students`.`id`, `students`.`name`, `students`.`surname`, `exams`.`course_id`, COUNT(`exams`.`course_id`) AS `tentativi_esami`
+/* SELECT `students`.`id`,`students`.`name`, `students`.`surname`, `exams`.`course_id`, `exam_student`.`vote` */
+FROM db_university.students
+JOIN `db_university`.`exam_student`
+ON `students`.`id` = `exam_student`.`student_id`
+JOIN `db_university`.`exams`
+ON `exam_student`.`exam_id` = `exams`.`id`
+WHERE `exam_student`.`vote` BETWEEN 1 AND 30
+GROUP BY `students`.`id`, `exams`.`course_id`;
